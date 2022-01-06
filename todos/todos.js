@@ -36,18 +36,19 @@ async function displayTodos() {
     // console.log(todos);
     // display the list of todos{
     todosEl.textContent = '';
-    if (!todos.complete){
-        for (let todo of todos) {
-            const todoEl = renderTodo(todo);
-            todosEl.append(todoEl);
 
+    for (let todo of todos) {
+        const todoEl = renderTodo(todo);
+        todosEl.append(todoEl);
+
+        if (!todo.complete) {
             todoEl.addEventListener('click', async() => {
                 await completeTodo(todo.id);
                 await displayTodos();
-                console.log(todo);
+                console.log(todo.complete);
             });
+        
         }
-
     }
     // console.log(todos);
     // be sure to give each todo an event listener
@@ -64,6 +65,7 @@ logoutButton.addEventListener('click', () => {
 
 deleteButton.addEventListener('click', async() => {
     // delete all todos
-
+    await deleteAllTodos();
     // then refetch and display the updated list of todos
+    await displayTodos();
 });
